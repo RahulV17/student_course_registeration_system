@@ -25,7 +25,7 @@ Console-based Java application for student-course registration using JDBC + MySQ
 - `model/Student`, `model/Course` — entities
 - `dao/StudentDAO`, `dao/CourseDAO`, `dao/EnrollmentDAO` — SQL ops
 - `service/RegistrationService` — business logic
-- `util/DBConnection` — HikariCP pool (reads db.properties)
+- `util/StudentDBConnection` — HikariCP pool (reads db.properties)
 - `RegistrationApp` — menu / main
 
 ## Package layout
@@ -35,5 +35,5 @@ student_course/
 ├── model/ { Student, Course }
 ├── dao/ { StudentDAO, CourseDAO, EnrollmentDAO }
 ├── service/RegistrationService.java
-└── util/DBConnection.java
+└── util/StudentDBConnection.java
 ```
