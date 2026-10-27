@@ -1,0 +1,4 @@
+# Copy this file to db.properties and fill in your credentials (db.properties is gitignored).
+student.db.url=jdbc:mysql://localhost:3306/student_db
+student.db.usr=root
+student.db.pwd=your_password_here

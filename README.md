@@ -17,7 +17,7 @@ Console-based Java application for student-course registration using JDBC + MySQ
 
 ## Setup
 1. Run `mysql -u root -p < src/main/resources/student_setup.sql`
-2. Edit `src/main/resources/db.properties` with your DB credentials.
+2. Copy `src/main/resources/db.properties.example` to `src/main/resources/db.properties` and fill in your DB credentials.
 3. Build: `mvn compile`
 4. Run: `java -cp target/classes;mysql-connector-j-8.0.33.jar;HikariCP-6.2.1.jar;slf4j-api-1.7.36.jar student_course.RegistrationApp`
 
