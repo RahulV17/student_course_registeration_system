@@ -1,7 +1,7 @@
 package student_course.dao;
 
 import student_course.model.Student;
-import student_course.util.DBConnection;
+import student_course.util.StudentDBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class StudentDAO {
 
     public void registerStudent(Student s) throws SQLException {
         String sql = "INSERT INTO students (student_id, name, email, phone) VALUES (?,?,?,?)";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, s.getStudentId());
             ps.setString(2, s.getName());
@@ -24,7 +24,7 @@ public class StudentDAO {
 
     public Student getStudentById(int id) throws SQLException {
         String sql = "SELECT * FROM students WHERE student_id = ?";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -44,7 +44,7 @@ public class StudentDAO {
     public List<Student> getAllStudents() throws SQLException {
         List<Student> list = new ArrayList<>();
         String sql = "SELECT * FROM students";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -61,7 +61,7 @@ public class StudentDAO {
 
     public void updateStudent(Student s) throws SQLException {
         String sql = "UPDATE students SET name=?, email=?, phone=? WHERE student_id=?";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, s.getName());
             ps.setString(2, s.getEmail());
@@ -74,7 +74,7 @@ public class StudentDAO {
 
     public void deleteStudent(int id) throws SQLException {
         String sql = "DELETE FROM students WHERE student_id = ?";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, id);
             int r = ps.executeUpdate();
@@ -84,7 +84,7 @@ public class StudentDAO {
 
     public void addStudentsBatch(List<Student> students) throws SQLException {
         String sql = "INSERT INTO students (student_id, name, email, phone) VALUES (?,?,?,?)";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             for (Student s : students) {
                 ps.setInt(1, s.getStudentId());

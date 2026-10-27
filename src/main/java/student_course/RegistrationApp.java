@@ -3,7 +3,7 @@ package student_course;
 import student_course.model.Course;
 import student_course.model.Student;
 import student_course.service.RegistrationService;
-import student_course.util.DBConnection;
+import student_course.util.StudentDBConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,7 @@ public class RegistrationApp {
                     }
                     case 0:
                         System.out.println("Goodbye!");
-                        DBConnection.closePool();
+                        StudentDBConnection.closePool();
                         sc.close();
                         return;
                     default: System.out.println("Invalid choice.");

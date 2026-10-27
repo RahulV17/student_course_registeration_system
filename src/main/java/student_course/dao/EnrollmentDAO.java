@@ -1,6 +1,6 @@
 package student_course.dao;
 
-import student_course.util.DBConnection;
+import student_course.util.StudentDBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class EnrollmentDAO {
 
     public void enrollStudent(int studentId, int courseId) throws SQLException {
-        Connection c = DBConnection.getConnection();
+        Connection c = StudentDBConnection.getConnection();
         try {
             c.setAutoCommit(false);
             // check student exists
@@ -52,7 +52,7 @@ public class EnrollmentDAO {
 
     public void enrollMultiple(int courseId, List<Integer> studentIds) throws SQLException {
         String sql = "INSERT INTO enrollments (student_id, course_id, enroll_date) VALUES (?,?,CURDATE())";
-        Connection c = DBConnection.getConnection();
+        Connection c = StudentDBConnection.getConnection();
         try {
             c.setAutoCommit(false);
             try (PreparedStatement ps = c.prepareStatement(sql)) {
@@ -77,7 +77,7 @@ public class EnrollmentDAO {
     public List<String> getStudentsInCourse(int courseId) throws SQLException {
         List<String> list = new ArrayList<>();
         String sql = "SELECT s.name FROM students s JOIN enrollments e ON s.student_id = e.student_id WHERE e.course_id = ?";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, courseId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -91,7 +91,7 @@ public class EnrollmentDAO {
         // CallableStatement: stored procedure sp_get_student_courses
         List<String> list = new ArrayList<>();
         String sql = "{CALL sp_get_student_courses(?)}";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              CallableStatement cs = c.prepareCall(sql)) {
             cs.setInt(1, studentId);
             try (ResultSet rs = cs.executeQuery()) {
@@ -106,7 +106,7 @@ public class EnrollmentDAO {
         String sql = "SELECT s.name, c.course_name FROM students s " +
                 "JOIN enrollments e ON s.student_id = e.student_id " +
                 "JOIN courses c ON e.course_id = c.course_id ORDER BY s.name, c.course_name";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
@@ -118,7 +118,7 @@ public class EnrollmentDAO {
 
     public void deleteEnrollment(int studentId, int courseId) throws SQLException {
         String sql = "DELETE FROM enrollments WHERE student_id=? AND course_id=?";
-        try (Connection c = DBConnection.getConnection();
+        try (Connection c = StudentDBConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, studentId);
             ps.setInt(2, courseId);

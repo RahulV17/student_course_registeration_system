@@ -1,7 +1,7 @@
 package student_course.dao;
 
 import student_course.model.Course;
-import student_course.util.DBConnection;
+import student_course.util.StudentDBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class CourseDAO {
 
     public void addCourse(Course c) throws SQLException {
         String sql = "INSERT INTO courses (course_id, course_name, credits) VALUES (?,?,?)";
-        try (Connection con = DBConnection.getConnection();
+        try (Connection con = StudentDBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, c.getCourseId());
             ps.setString(2, c.getCourseName());
@@ -23,7 +23,7 @@ public class CourseDAO {
 
     public void addCoursesBatch(List<Course> courses) throws SQLException {
         String sql = "INSERT INTO courses (course_id, course_name, credits) VALUES (?,?,?)";
-        try (Connection con = DBConnection.getConnection();
+        try (Connection con = StudentDBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             for (Course c : courses) {
                 ps.setInt(1, c.getCourseId());
@@ -38,7 +38,7 @@ public class CourseDAO {
 
     public Course getCourseById(int id) throws SQLException {
         String sql = "SELECT * FROM courses WHERE course_id = ?";
-        try (Connection con = DBConnection.getConnection();
+        try (Connection con = StudentDBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -57,7 +57,7 @@ public class CourseDAO {
     public List<Course> getAllCourses() throws SQLException {
         List<Course> list = new ArrayList<>();
         String sql = "SELECT * FROM courses";
-        try (Connection con = DBConnection.getConnection();
+        try (Connection con = StudentDBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -73,7 +73,7 @@ public class CourseDAO {
 
     public void updateCourse(Course c) throws SQLException {
         String sql = "UPDATE courses SET course_name=?, credits=? WHERE course_id=?";
-        try (Connection con = DBConnection.getConnection();
+        try (Connection con = StudentDBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, c.getCourseName());
             ps.setInt(2, c.getCredits());
@@ -86,7 +86,7 @@ public class CourseDAO {
     public void deleteCourse(int id) throws SQLException {
         String delEnr = "DELETE FROM enrollments WHERE course_id = ?";
         String sql = "DELETE FROM courses WHERE course_id = ?";
-        try (Connection con = DBConnection.getConnection()) {
+        try (Connection con = StudentDBConnection.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(delEnr)) {
                 ps.setInt(1, id);
                 ps.executeUpdate();

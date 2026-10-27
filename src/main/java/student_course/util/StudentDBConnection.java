@@ -8,12 +8,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConnection {
+public class StudentDBConnection {
     private static final Properties properties = new Properties();
     private static final HikariDataSource dataSource;
 
     static {
-        try (InputStream is = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
+        try (InputStream is = StudentDBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (is != null) properties.load(is);
         } catch (IOException e) {
             e.printStackTrace();
